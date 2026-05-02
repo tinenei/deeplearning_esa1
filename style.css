@@ -1,0 +1,122 @@
+#pairs {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+}
+
+.row-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+
+    align-items: stretch;
+
+}
+.leftCell img {
+    width: 100%;
+    max-width: 600px;
+    height: auto;
+    object-fit: contain;
+}
+
+.page-wrapper {
+    max-width: 1000px;   /* begrenzt Breite */
+    margin: 0 auto;      /* zentriert horizontal */
+    padding: 20px;       /* Abstand zum Rand */
+    border: 2px solid #ccc;     /* Rahmen */
+    border-radius: 16px;        /* runde Ecken */
+    background: white;          /* wichtig für Card-Look */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08); /* optional */
+
+}
+.row-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+    align-items: stretch;
+}
+
+.leftCell,
+.rightCell {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    padding: 12px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+.leftCell img {
+    border-radius: 16px;
+    width: 100%;
+    max-width: 500px;
+
+    height: auto; /* WICHTIG */
+    object-fit: contain;
+
+    border: 2px solid #ddd;
+
+
+    padding : 10px;
+}
+.rightCell {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.textBox {
+    font-family: monospace;
+    background: #f5f5f5;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.chartBox canvas {
+    background: white;
+    border-radius: 10px;
+    padding: 10px;
+}
+.dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    align-items: start;
+}
+
+
+.classification img {
+    width: 500px;
+    height: 300px;
+    object-fit: contain;
+    border: 2px solid #ddd;
+    border-radius: 16px;
+    margin-bottom: 20px;
+}
+
+.correct {
+    border: 4px solid #4CAF50 !important; /* grün */
+}
+
+.incorrect {
+    border: 4px solid #f44336 !important; /* rot */
+}
+
+.resultLabel {
+    margin-top: 10px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.resultLabel.correctText {
+    color: #4CAF50; /* grün */
+}
+
+.resultLabel.incorrectText {
+    color: #f44336; /* rot */
+}
