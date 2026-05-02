@@ -20,13 +20,13 @@
         <h2>Aufgabenstellung</h2>
         <p>
             Erweitern Sie das ml5 Image Classification Tutorial (es gibt auch eine neuere Version, siehe Coding und Tutorials)  so, dass ein Nutzer beliebige Bilder klassifizieren kann. Sie verwenden dazu wie im Tutorial ein bestehendes, vor-trainiertes Model. Sie müssen also nichts selber trainieren/anlernen.
-        </p><br>
+        </p>
         <p>
             A1) Zeigen Sie Beispiel-Bilder, jeweils drei für korrekte und falsche Klassifikation, zusammen mit den Ergebnissen der Klassifikation als Diagramm (siehe Resultate und Visualisierung). Die Klassifikation wird direkt in der Anwendung berechnet. Machen Sie bei der Darstellung deutlich, welche Bilder korrekt oder falsch klassifiziert werden. Die Bilder können aus dem ImageNet Datensatz zum Image Classification Tutorial stammen (siehe Daten) oder von Ihnen kommen. Sie können Bilder auch künstlich modifizieren.
-        </p><br>
+        </p>
         <p>
             A2) Der Nutzer soll ein eigenes Bild in die Anwendung laden und klassifizieren lassen können (siehe Interaktion).
-        </p><br>
+        </p>
         <p>
             <b>Interaktion:</b> Der Nutzer kann ein Bild zur Klassifikation hochladen oder per Drag-and-drop in die Anwendung ziehen. Dieses wird zunächst dargestellt und dann automatisch oder mittels eines Buttons "Classify" klassifiziert.
         </p>
@@ -38,10 +38,14 @@
         <section class="classification">
 
             <div id="pairs">
-                <h2>Beispielbilder</h2>
-                <div id="examples"></div>
-            </div>
+                <div class="header-row">
+                    <div class="header-cell">Bilder</div>
+                    <div class="header-cell">Klassifikation</div>
+                </div>
 
+                <!--h2>Beispielbilder</h2>
+                <div id="examples"></div-->
+            </div>
             <h2>Eigenes Bild</h2>
             <input type="file" id="uploadInput" accept="image/*">
             <br>

@@ -119,7 +119,8 @@ function showResult(results, textBox, chartBox) {
             }]
         },
         options: {
-            responsive: false,
+            responsive: true,
+            maintainAspectRatio: false,
             scales: {
                 y: {
                     beginAtZero: true,
