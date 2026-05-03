@@ -23,6 +23,7 @@ async function loadModel() {
     console.log("Modell geladen:", mobilenet);
     console.log("TYPE:", typeof mobilenet);
     console.log("MODEL:", mobilenet);
+    document.getElementById("loadingScreen").style.display = "none";
     renderExampleImages();
 }
 
@@ -147,8 +148,15 @@ function setupUpload() {
     input.addEventListener("change", (event) => {
         const file = event.target.files[0];
         console.log("upload");
-        if (!file) return;
+        if (!file) {
+            showError("Keine Datei ausgewählt.");
+            return;
+        }
 
+        if (!['image/jpeg', 'image/png'].includes(file.type)) {
+            showError("Falscher Dateityp. Bitte nur JPG, PNG, WEBP oder GIF hochladen.");
+            return;
+        }
 
         const reader = new FileReader();
         console.log("Upload läuft");
@@ -161,8 +169,8 @@ function setupUpload() {
 }
 
 function createUploadRow(imgSrc) {
-    const container = document.getElementById("pairs");
-
+    const container = document.getElementById("uploadResults");
+    container.innerHTML = "";
     if (!container) {
         console.error("pairs container fehlt!");
         return;
@@ -215,4 +223,16 @@ function createUploadRow(imgSrc) {
     row.appendChild(right);
 
     container.appendChild(row);
+}
+
+function showError(message) {
+    console.error(message);
+
+    const errorBox = document.getElementById("errorBox");
+    if (errorBox) {
+        errorBox.textContent = message;
+        errorBox.style.display = "block";
+    } else {
+        alert(message); // Fallback
+    }
 }

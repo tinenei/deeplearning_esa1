@@ -12,6 +12,12 @@
 </head>
 
 <body>
+<div id="loadingScreen">
+    <div class="loader-box">
+        <div class="spinner"></div>
+        <p>Modell wird geladen...</p>
+    </div>
+</div>
 <div class="page-wrapper">
     <h1>
         Bildklassifikation
@@ -42,15 +48,51 @@
                     <div class="header-cell">Bilder</div>
                     <div class="header-cell">Klassifikation</div>
                 </div>
-
+            </div>
                 <!--h2>Beispielbilder</h2>
                 <div id="examples"></div-->
-            </div>
+        </section>
+        <section class="explanation-card">
+            <h2>Wie funktioniert die Klassifikation?</h2>
+            <p>
+                Die Bilder werden mit einem vortrainierten MobileNet-Modell analysiert.
+                Das Modell wurde mit Millionen von Bildern trainiert und erkennt typische Muster,
+                Formen und Objekte. Für jedes Bild werden die wahrscheinlichsten Klassen mit
+                einer Confidence (Sicherheit) ausgegeben.
+            </p>
+        </section>
+        <section class="classification">
             <h2>Eigenes Bild</h2>
-            <input type="file" id="uploadInput" accept="image/*">
+            <p>
+                Laden Sie ein eigenes Bild hoch, um es automatisch klassifizieren zu lassen.
+                Unterstützt werden gängige Bildformate wie JPG und PNG.
+                Nach dem Upload wird das Bild direkt analysiert und die drei wahrscheinlichsten
+                Klassen werden angezeigt.
+            </p>
+            <p>
+                    Laden Sie hier Ihr eigenes Bild hoch. Erlaubt sind die Dateiformate: jpg, png, webp und gif.
+            </p>
+            <input type="file" id="uploadInput" accept="image/*" hidden>
+            <label for="uploadInput" class="button">
+                Bild auswählen
+            </label>
+            <div id="errorBox" style="display:none; color:red; margin-top:10px;"></div>
+            <div id="uploadResults"></div>
             <br>
 
         </section>
+
+        <section class="discussion">
+
+        <p>
+            Text Diskussion
+        </p>
+            <h3>Beobachtungen</h3>
+            <p>Text Text</p>
+            <h3>Fazit</h3>
+            <p>Text Text</p>
+        </section>
+
 
 
     </main>
