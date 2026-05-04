@@ -1,18 +1,22 @@
 // ======================
-// Globale Variablen
+// Konfiguration
 // ======================
-let mobilenet;
-
 const exampleImages = [
     { src: "images/correct1.jpg", correct: true },
     { src: "images/correct2.jpg", correct: true },
     { src: "images/correct3.jpg", correct: true },
     { src: "images/incorrect1.jpg", correct: false },
+    { src: "images/incorrect2.jpg", correct: false },
+    { src: "images/incorrect3.jpg", correct: false },
 ];
+
+const chartColors = ["#4CAF50", "#FF9800", "#F44336"];
+
+let classifier;
 
 
 // ======================
-// Init
+// Start
 // ======================
 window.addEventListener("load", init);
 
@@ -26,92 +30,83 @@ async function init() {
 // Model
 // ======================
 async function loadModel() {
-    mobilenet = await ml5.imageClassifier("MobileNet");
-
-    console.log("Modell geladen:", mobilenet);
+    classifier = await ml5.imageClassifier("MobileNet");
 
     document.getElementById("loadingScreen").style.display = "none";
 
     renderExampleImages();
 }
 
-async function classify(img) {
-    return (await mobilenet.classify(img)).slice(0, 3);
+async function classifyImage(img) {
+    const results = await classifier.classify(img);
+    return results.slice(0, 3);
 }
 
 
 // ======================
-// Example Images
+// Beispielbilder
 // ======================
 function renderExampleImages() {
     const container = document.getElementById("pairs");
-
-    if (!container) {
-        console.error("#pairs fehlt!");
-        return;
-    }
+    if (!container) return console.error("pairs fehlt");
 
     container.innerHTML = "";
 
     exampleImages.forEach(data => {
         const row = createRow();
 
-        const { left, imgFrame, img, label } = createImageCell();
+        const { left, frame, img, label } = createImageCell();
         const { textBox, chartBox } = createResultCell();
         const right = createRightCell(textBox, chartBox);
 
         row.append(left, right);
         container.appendChild(row);
 
-        // 🔥 WICHTIG: erst Event, dann src
-        img.addEventListener("load", async () => {
-            const results = await classify(img);
+        img.onload = async () => {
+            const results = await classifyImage(img);
 
-            applyFrameStyle(imgFrame, data.correct);
-            applyLabel(label, data.correct);
-
-            showResult(results, textBox, chartBox);
-        });
+            setFrameState(frame, data.correct);
+            setLabel(label, data.correct);
+            renderResult(results, textBox, chartBox);
+        };
 
         img.src = data.src;
 
-        imgFrame.appendChild(img);
-        left.append(imgFrame, label);
+        frame.appendChild(img);
+        left.append(frame, label);
     });
 }
 
 
 // ======================
-// Upload Image Row
+// Upload
 // ======================
-function createUploadRow(imgSrc) {
+function createUploadRow(src) {
     const container = document.getElementById("uploadResults");
-    if (!container) return console.error("uploadResults container fehlt!");
+    if (!container) return console.error("uploadResults fehlt");
 
     container.innerHTML = "";
 
     const row = createRow();
-
-    const { left, imgFrame, img, label } = createImageCell();
+    const { left, frame, img, label } = createImageCell();
     const { textBox, chartBox } = createResultCell();
-
     const right = createRightCell(textBox, chartBox);
 
     img.onload = async () => {
-        if (!mobilenet) return showError("Modell noch nicht geladen!");
+        if (!classifier) return showError("Modell nicht geladen");
 
-        const results = await classify(img);
+        const results = await classifyImage(img);
 
-        imgFrame.classList.add("uploaded");
+        frame.classList.add("uploaded");
 
-        showResult(results, textBox, chartBox);
+        renderResult(results, textBox, chartBox);
         left.appendChild(label);
     };
 
-    img.src = imgSrc;
+    img.src = src;
 
-    imgFrame.append(img);
-    left.append(imgFrame);
+    frame.appendChild(img);
+    left.append(frame);
 
     row.append(left, right);
     container.appendChild(row);
@@ -119,42 +114,42 @@ function createUploadRow(imgSrc) {
 
 
 // ======================
-// UI Helpers
+// UI Builder
 // ======================
 function createRow() {
-    const row = document.createElement("div");
-    row.className = "row-pair";
-    return row;
+    const el = document.createElement("div");
+    el.className = "row-pair";
+    return el;
 }
 
 function createImageCell() {
     const left = document.createElement("div");
-    left.classList.add("leftCell", "card");
+    left.classList.add("leftCell");
 
-    const imgFrame = document.createElement("div");
-    imgFrame.className = "imageFrame";
+    const frame = document.createElement("div");
+    frame.className = "imageFrame";
 
     const img = document.createElement("img");
 
     const label = document.createElement("div");
     label.className = "resultLabel";
 
-    return { left, imgFrame, img, label };
+    return { left, frame, img, label };
 }
 
 function createResultCell() {
-    const textBox = document.createElement("div");
-    textBox.className = "textBox";
-
-    const chartBox = document.createElement("div");
-    chartBox.className = "chartBox";
-
-    return { textBox, chartBox };
+    return {
+        textBox: document.createElement("div"),
+        chartBox: document.createElement("div")
+    };
 }
 
 function createRightCell(textBox, chartBox) {
     const right = document.createElement("div");
-    right.classList.add("rightCell", "card");
+    right.classList.add("rightCell");
+
+    textBox.className = "textBox";
+    chartBox.className = "chartBox";
 
     right.append(textBox, chartBox);
     return right;
@@ -162,13 +157,13 @@ function createRightCell(textBox, chartBox) {
 
 
 // ======================
-// Styling Helpers
+// Styling
 // ======================
-function applyFrameStyle(frame, correct) {
+function setFrameState(frame, correct) {
     frame.classList.add(correct ? "correct" : "incorrect");
 }
 
-function applyLabel(label, correct) {
+function setLabel(label, correct) {
     label.textContent = correct
         ? "Korrekt klassifiziert"
         : "Nicht korrekt klassifiziert";
@@ -180,44 +175,78 @@ function applyLabel(label, correct) {
 // ======================
 // Results
 // ======================
-function showResult(results, textBox, chartBox) {
+function renderResult(results, textBox, chartBox) {
     renderText(results, textBox);
     renderChart(results, chartBox);
 }
 
-function renderText(results, textBox) {
-    textBox.innerHTML = "";
+function renderText(results, box) {
+    box.innerHTML = "";
 
     results.forEach((r, i) => {
+//        const name = r.label.split(",")[0];
+        const name = r.label;
+        const confidence = (r.confidence * 100).toFixed(1);
+
         const div = document.createElement("div");
-        div.textContent = `${i + 1}: ${r.label} – ${(r.confidence * 100).toFixed(2)}%`;
-        textBox.appendChild(div);
+        div.className = "resultItem";
+
+/*        div.innerHTML = `
+            <strong>${i + 1}. ${name}</strong>
+            <strong>${confidence}%</strong>
+        `;
+
+*/
+        div.innerHTML = `
+            ${i + 1}. ${name}
+            <strong>${confidence}%</strong>
+        `;
+        box.appendChild(div);
     });
 }
 
-function renderChart(results, chartBox) {
-    chartBox.innerHTML = "";
+function renderChart(results, box) {
+    box.innerHTML = "";
 
     const canvas = document.createElement("canvas");
-    chartBox.appendChild(canvas);
+    box.appendChild(canvas);
 
     new Chart(canvas, {
         type: "bar",
         data: {
-            labels: results.map(r => r.label),
+            labels: results.map(r => r.label.split(",")[0]),
             datasets: [{
-                label: "Confidence (%)",
-                data: results.map(r => r.confidence * 100)
+                data: results.map(r => r.confidence * 100),
+                backgroundColor: chartColors,
+                borderRadius: 6,
+                barPercentage: 0.6
             }]
         },
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            scales: {
-                y: { beginAtZero: true, max: 100 }
-            },
             plugins: {
-                legend: { display: false }
+                legend: { display: false },
+                title: {
+                    display: true,
+                    text: "Klassifikation",
+                    align: "start",
+                    font: { size: 14 }
+                }
+            },
+            scales: {
+                x: {
+                    ticks: { font: { size: 11 }, color: "#555" },
+                    grid: { display: false }
+                },
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        font: { size: 11 },
+                        callback: v => v + "%"
+                    }
+                }
             }
         }
     });
@@ -229,29 +258,26 @@ function renderChart(results, chartBox) {
 // ======================
 function setupUpload() {
     const input = document.getElementById("uploadInput");
-    const button = document.getElementById("uploadBtn");
-    const dropZone = document.getElementById("dropZone");
+    const btn = document.getElementById("uploadBtn");
+    const drop = document.getElementById("dropZone");
 
-    if (!input || !button || !dropZone) {
-        console.error("Upload Elemente fehlen");
-        return;
-    }
+    if (!input || !btn || !drop) return;
 
-    button.onclick = () => input.click();
-    dropZone.onclick = () => input.click();
+    btn.onclick = () => input.click();
+    drop.onclick = () => input.click();
 
     input.onchange = e => handleFile(e.target.files[0]);
 
-    dropZone.ondragover = e => {
+    drop.ondragover = e => {
         e.preventDefault();
-        dropZone.classList.add("dragover");
+        drop.classList.add("dragover");
     };
 
-    dropZone.ondragleave = () => dropZone.classList.remove("dragover");
+    drop.ondragleave = () => drop.classList.remove("dragover");
 
-    dropZone.ondrop = e => {
+    drop.ondrop = e => {
         e.preventDefault();
-        dropZone.classList.remove("dragover");
+        drop.classList.remove("dragover");
         handleFile(e.dataTransfer.files[0]);
     };
 }
@@ -261,30 +287,26 @@ function setupUpload() {
 // File Handling
 // ======================
 function handleFile(file) {
-    if (!file) return showError("Keine Datei ausgewählt.");
+    if (!file) return showError("Keine Datei");
 
     if (!["image/jpeg", "image/png"].includes(file.type)) {
-        return showError("Falscher Dateityp. Bitte nur JPG oder PNG.");
+        return showError("Nur JPG oder PNG erlaubt");
     }
 
     const reader = new FileReader();
-
     reader.onload = e => createUploadRow(e.target.result);
-
     reader.readAsDataURL(file);
 }
 
 
 // ======================
-// Error Handling
+// Error
 // ======================
-function showError(message) {
+function showError(msg) {
     const box = document.getElementById("errorBox");
 
-    if (box) {
-        box.textContent = message;
-        box.style.display = "block";
-    } else {
-        alert(message);
-    }
+    if (!box) return alert(msg);
+
+    box.textContent = msg;
+    box.style.display = "block";
 }

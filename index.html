@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="utf-8" />
 
@@ -15,7 +15,7 @@
 <div id="loadingScreen">
     <div class="loader-box">
         <div class="spinner"></div>
-        <p>Modell wird geladen...</p>
+        <p>Modell wird geladen und Bilder werden klassifiziert ...</p>
     </div>
 </div>
 <div class="page-wrapper">
@@ -49,15 +49,7 @@
                 </div>
             </div>
         </section>
-        <section class="explanation-card">
-            <h2>Wie funktioniert die Klassifikation?</h2>
-            <p>
-                Die Bilder werden mit einem vortrainierten MobileNet-Modell analysiert.
-                Das Modell wurde mit Millionen von Bildern trainiert und erkennt typische Muster,
-                Formen und Objekte. Für jedes Bild werden die wahrscheinlichsten Klassen mit
-                einer Confidence (Sicherheit) ausgegeben.
-            </p>
-        </section>
+
         <section class="classification upload-section">
             <h2>Eigenes Bild</h2>
             <p>
@@ -77,21 +69,44 @@
             <div id="errorBox" style="display:none; color:red; margin-top:10px;"></div>
             <div id="uploadResults"></div>
         </section>
-        <section class="discussion">
-<h2>Diskussion</h2>
-        <p>
-            Text Diskussion
-        </p>
+        <section class="explanation-card">
+            <h2>Diskussion</h2>
+            <p>
+                Die Bilder werden mit einem vortrainierten MobileNet-Modell analysiert.
+                Das Modell wurde mit Millionen von Bildern trainiert und erkennt typische Muster,
+                Formen und Objekte. Für jedes Bild werden die wahrscheinlichsten Klassen mit
+                einer Confidence (Sicherheit) ausgegeben.
+            </p>
             <h3>Beobachtungen</h3>
+            <p>
+                An den vorgegebenen Beispielbilder zeigt sich, dass die Klassifikation bei klar erkennbaren Objekten sehr gut funktioniert,
+                die dem Modell ausreichend bekannt sind, sehr gut funktioniert.
+            </p>
+            <p>
+                Probleme hat das ML5-Modell bei Bildern mit Unschärfe (Bild 4), wenn der Hintergrund dominiert, das abgebildete Motiv nicht im Fokus steht (Bild 5)
+                oder auch bei ungewöhnlicher Perspektive bzw. Bewegung. Das Modell wurde auf den Datensatz ImageNet trainiert, es sind
+                also nur bestimmte Klassen bekannt. Passt nun ein Bild nicht zu diesen Klassen, kann es zu Verwechslungen kommen. (Bild 6)</p>
+        </section>
+        <section class="discussion-card">
+
+            <h2>Dokumentation</h2>
+            <h3>1) Technisch</h3>
+        <p>
+            <strong>Verwendete Technologien</strong>
+        </p>
+            <ul>
+            <li>ml5.js: Javascript-Bibliothek für ML, vortrainiertes Modell MobileNet zur Bildklassifikation</li>
+            <li>p5.js: wird von ml5.js benötigt</li>
+            <li>Chart.js: Erstellung von Diagrammen zur Visualisierung der Ergebnisse der Klassikation, die Confidence wird als Wahrscheinlichkeit in
+                Form von Balkendiagrammen ausgegeben</li>
+            <li>HTML, CSS, JS: Darstellung der Benutzeroberfläche, Gestaltung, Logik der Anwendung, Feedback</li>
+            </ul>
             <p>Text Text</p>
             <h3>Fazit</h3>
             <p>Text Text</p>
         </section>
         <section class="discussion">
-
-
         <h2>Dokumentation</h2>
-
         <p>
             Diese Seite wurde im Rahmen des Moduls Deep Learning, im Master-Studium Medieninformatik Online im Sommersemester 2026 erstellt.
         </p>

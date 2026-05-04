@@ -1,4 +1,4 @@
-# Deep Learning Einsendeaufgabe 1 - Sommersemester 2026
+# Deep Learning Einsendeaufgabe 1 - SS 2026
 ## Thema: Bilderkennung (Klassifikation) mit dem ml5 Framework
 
 **Bearbeitungszeit:** 15–20 Stunden, je nach Vorkenntnissen und Erfahrung.
