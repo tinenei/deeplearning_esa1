@@ -199,7 +199,7 @@ function renderText(results, box) {
 */
         div.innerHTML = `
             ${i + 1}. ${name}
-            <strong>${confidence}%</strong>
+            <strong>Confidence: ${confidence}%</strong>
         `;
         box.appendChild(div);
     });
@@ -287,10 +287,11 @@ function setupUpload() {
 // File Handling
 // ======================
 function handleFile(file) {
+    clearError();
     if (!file) return showError("Keine Datei");
 
-    if (!["image/jpeg", "image/png"].includes(file.type)) {
-        return showError("Nur JPG oder PNG erlaubt");
+    if (!["image/jpeg", "image/png", "image/webp", "image/gif"].includes(file.type)) {
+        return showError("Nur jpg, png, webp und gif erlaubt");
     }
 
     const reader = new FileReader();
@@ -300,7 +301,7 @@ function handleFile(file) {
 
 
 // ======================
-// Error
+// Error-Handling
 // ======================
 function showError(msg) {
     const box = document.getElementById("errorBox");
@@ -309,4 +310,12 @@ function showError(msg) {
 
     box.textContent = msg;
     box.style.display = "block";
+}
+
+function clearError() {
+    const box = document.getElementById("errorBox");
+    if (!box) return;
+
+    box.textContent = "";
+    box.style.display = "none";
 }

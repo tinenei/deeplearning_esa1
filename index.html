@@ -25,7 +25,7 @@
     <header class="intro-card">
 
         <p>
-            <b>Aufgabenstellung:</b> Das ml5 Image Classification Tutorial soll so erweitert werden, dass ein Nutzer beliebige Bilder klassifizieren kann.
+            <strong>Aufgabenstellung:</strong> Das ml5 Image Classification Tutorial soll so erweitert werden, dass ein Nutzer beliebige Bilder klassifizieren kann.
                 Dazu wird wie im Tutorial ein bestehendes, vor-trainiertes Modell verwendet werden, es muss also nichts selber trainiert/angelernt werden.
         </p>
         <p>
@@ -72,20 +72,19 @@
         <section class="explanation-card">
             <h2>Diskussion</h2>
             <p>
-                Die Bilder werden mit einem vortrainierten MobileNet-Modell analysiert.
-                Das Modell wurde mit Millionen von Bildern trainiert und erkennt typische Muster,
-                Formen und Objekte. Für jedes Bild werden die wahrscheinlichsten Klassen mit
-                einer Confidence (Sicherheit) ausgegeben.
+                Die Bilder werden mithilfe eines vortrainierten MobileNet-Modells analysiert. Dieses wurde mit Millionen von Bildern trainiert und ist in der Lage,
+                typische Muster, Formen und Objekte zu erkennen. Für jedes Bild gibt das Modell die wahrscheinlichsten Klassen sowie eine sogenannte Confidence
+                (Sicherheitswahrscheinlichkeit) aus.
             </p>
             <h3>Beobachtungen</h3>
             <p>
-                An den vorgegebenen Beispielbilder zeigt sich, dass die Klassifikation bei klar erkennbaren Objekten sehr gut funktioniert,
-                die dem Modell ausreichend bekannt sind, sehr gut funktioniert.
+                An den vorgegebenen Beispielbildern zeigt sich, dass die Klassifikation bei klar erkennbaren und häufig vorkommenden Objekten zuverlässig funktioniert.
+                Besonders gut sind die Ergebnisse, wenn das Hauptmotiv deutlich im Vordergrund steht und dem Trainingsdatensatz des Modells ähnelt.
             </p>
             <p>
-                Probleme hat das ML5-Modell bei Bildern mit Unschärfe (Bild 4), wenn der Hintergrund dominiert, das abgebildete Motiv nicht im Fokus steht (Bild 5)
-                oder auch bei ungewöhnlicher Perspektive bzw. Bewegung. Das Modell wurde auf den Datensatz ImageNet trainiert, es sind
-                also nur bestimmte Klassen bekannt. Passt nun ein Bild nicht zu diesen Klassen, kann es zu Verwechslungen kommen. (Bild 6)</p>
+                Schwierigkeiten treten hingegen bei unscharfen Bildern (Bild 4), dominanten Hintergründen (Bild 5) oder ungewöhnlichen Perspektiven und Bewegungen (Bild 6) auf.
+                Da das Modell auf dem ImageNet-Datensatz basiert, kennt es nur eine begrenzte Anzahl an Klassen. Stimmen die Inhalte eines Bildes nicht ausreichend mit diesen Klassen überein,
+                kann es zu Fehlklassifikationen kommen.</p>
         </section>
         <section class="discussion-card">
 
@@ -95,18 +94,25 @@
             <strong>Verwendete Technologien</strong>
         </p>
             <ul>
-            <li>ml5.js: Javascript-Bibliothek für ML, vortrainiertes Modell MobileNet zur Bildklassifikation</li>
-            <li>p5.js: wird von ml5.js benötigt</li>
-            <li>Chart.js: Erstellung von Diagrammen zur Visualisierung der Ergebnisse der Klassikation, die Confidence wird als Wahrscheinlichkeit in
-                Form von Balkendiagrammen ausgegeben</li>
-            <li>HTML, CSS, JS: Darstellung der Benutzeroberfläche, Gestaltung, Logik der Anwendung, Feedback</li>
+            <li><strong>ml5.js:</strong> Javascript-Bibliothek für Machine Learning, Nutzung des vortrainierten Modells MobileNet zur Bildklassifikation</li>
+            <li><strong>p5.js:</strong> Voraussetzung für ml5.js und Unterstützung bei der Bildverarbeitung</li>
+            <li><strong>Chart.js:</strong> Visualisierung der Klassifikationsergebnisse; Darstellung der Confidence-Werte als Balkendiagramm</li>
+            <li><strong>HTML, CSS, JS:</strong> Umsetzung der Benutzeroberfläche, Gestaltung sowie Logik und Interaktion der Anwendung</li>
             </ul>
-            <p>Text Text</p>
+            <h3>2) Fachlich</h3>
+            <p>Das vortrainierte Deep-Learning-Modell MobileNet wird über die Bibliothek ml5.js eingebunden. Anhand von Beispielbildern wird aufgezeigt, wie die
+                Bilder klassifiziert werden. Die drei wahrscheinlichsten Ergebnisse (mit der höchsten Confidence) werden ausgegeben. Die korrekte und falsche Klassifikation wird
+                anhand von farblichen Rahmen veranschaulicht.
+            </p>
+
+            <p>Nutzende können eigene Bilder hochladen, um diese zu klassifizieren. Auf die Darstellung mit grünen oder
+                roten Rahmen wurde verzichtet, da eine hohe Confidence nicht immer eine korrekte Klassifikation bedeutet.
+            </p>
+            <p>Für eine gute Usability wurde auf ein gut strukturiertes Design mit nachvollziehbarer Nutzerführung und guten Farbkontrasten geachtet.</p>
             <h3>Fazit</h3>
             <p>Text Text</p>
         </section>
         <section class="discussion">
-        <h2>Dokumentation</h2>
         <p>
             Diese Seite wurde im Rahmen des Moduls Deep Learning, im Master-Studium Medieninformatik Online im Sommersemester 2026 erstellt.
         </p>
