@@ -74,24 +74,33 @@
             <h2>Diskussion</h2>
             <p>
                 Die Bilder werden mithilfe eines vortrainierten MobileNet-Modells analysiert. Dieses wurde mit Millionen von Bildern trainiert und ist in der Lage,
-                typische Muster, Formen und Objekte zu erkennen. Für jedes Bild gibt das Modell die wahrscheinlichsten Klassen sowie eine sogenannte Confidence
-                (Sicherheitswahrscheinlichkeit) aus.
+                typische Muster, Formen und Objekte zu erkennen. Für jedes Bild gibt das Modell die wahrscheinlichsten Klassen sowie die entsprechende Confidence
+                aus.
             </p>
             <h3>Beobachtungen</h3>
             <p>
                 An den vorgegebenen Beispielbildern zeigt sich, dass die Klassifikation bei klar erkennbaren und häufig vorkommenden Objekten zuverlässig funktioniert.
                 Besonders gut sind die Ergebnisse, wenn das Hauptmotiv deutlich im Vordergrund steht und dem Trainingsdatensatz des Modells ähnelt.
+                Die Objekte auf den ersten drei Bildern werden mit hoher Confidence korrekt klassifiziert.
             </p>
             <p>
-                Schwierigkeiten treten hingegen bei unscharfen Bildern (Bild 4), dominanten Hintergründen (Bild 5) oder ungewöhnlichen Perspektiven und Bewegungen auf.
-                Da das Modell auf dem ImageNet-Datensatz basiert, kennt es nur eine begrenzte Anzahl an Klassen. Stimmen die Inhalte eines Bildes nicht ausreichend mit diesen Klassen überein,
-                kann es zu Fehlklassifikationen kommen (Bild 6).</p>
+                Schwierigkeiten treten hingegen bei unscharfen Bildern (Bild 4), bei der Abbildung von mehreren Objekten (Bild 5) und Ähnlichkeit
+                zu anderen Objekten (Bild 6) auf.
+                In diesen Fällen werden falsche Klassifikationsergebnisse mit nur einer niedrigen Confidence erreicht: Die Merkmale des Objekts werden nicht
+                korrekt erkannt und damit das abgebildete Objekt falsch zugeordnet.
+
+                Auch bei dominanten Hintergründen, teilweise verdeckten Objekten, im Vergleich sehr kleinen Objekten sowie ungewöhnlichen Perspektiven und Bewegungen treten Schwierigkeiten bei der Klassifikation auf.
+                Da das Modell auf dem ImageNet-Datensatz basiert, kennt es nur eine begrenzte Anzahl an Klassen, stimmen die Inhalte eines Bildes nicht ausreichend mit diesen Klassen überein,
+                wird es auch hier schwierig für das Modell richtig zu klassifizieren.
+            </p>
             <h3>
                 Fazit
             </h3>
             <p>
                 Das eingesetzte Modell liefert bei geeigneten Bildern zuverlässige Ergebnisse und ermöglicht einen einfachen Einstieg in die Bildklassifikation mit Machine Learning.
                 Gleichzeitig zeigen die Tests, dass die Qualität der Ergebnisse stark von der Bildbeschaffenheit sowie den im Modell vorhandenen Klassen abhängt.
+                Die Confidence ist eine gute Orientierung zur Einordnung der Klassifikation, bei hoher Confidence sind die Bilder häufig korrekt
+                klassifiziert, es kann aber nicht ausgeschlossen werden, dass das Objekt mit einem ähnlichen Objekt verwechselt wurde.
             </p>
         </section>
         <section class="explanation-card">
