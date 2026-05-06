@@ -31,9 +31,7 @@ async function init() {
 // ======================
 async function loadModel() {
     classifier = await ml5.imageClassifier("MobileNet");
-
     document.getElementById("loadingScreen").style.display = "none";
-
     renderExampleImages();
 }
 
